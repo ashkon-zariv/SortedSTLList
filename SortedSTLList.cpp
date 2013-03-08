@@ -66,9 +66,12 @@ Card::Suit Card::suitRanks[4] = {Card::clubs, Card::diamonds, Card::hearts,
 int Card::numValsInOrderingArray = 13;
 
 stack<CardWOrderStk::OrderObject> CardWOrderStk::OrderObjects;
-char CardWOrderStk::OrderObject::valueRanks[];
-Card::Suit CardWOrderStk::OrderObject::suitRanks[];
-int CardWOrderStk::OrderObject::numValsInOrderingArray;
+char CardWOrderStk::OrderObject::valueRanks[] = {'2', '3', '4', '5', '6', '7', '8', '9', 'T',
+   'J', 'Q', 'K', 'A', 'X'};
+Card::Suit CardWOrderStk::OrderObject::suitRanks[4] = {Card::clubs, Card::diamonds, Card::hearts,
+   Card::spades};
+int CardWOrderStk::OrderObject::numValsInOrderingArray = 13;
+
 
 Card generateRandomCard(bool fixedSequence = true);
 char turnIntIntoVal(int k);
@@ -121,10 +124,13 @@ int main()
       insrtcard = generateRandomCard(false);
       insert(list1, insrtcard);
       CardOrder.pushOrdering();
+      Card::setRankingOrder(valueOrder, suitOrder, numVals);
+      insert(list2, insrtcard);
       CardOrder.popOrdering();
    }
 
    showList(list1);
+   showList(list2);
 }
 
 void insert(CardList &mylist, Card &c)
@@ -177,7 +183,7 @@ void showList(CardList &mylist)
       cout << "[" << card.toString() << "] ";
    }
    
-   cout << endl << " __List End__" << endl << endl;
+   cout << endl << "___List End___" << endl << endl;
 }
 
 bool operator==(Card c1, Card c2)
